@@ -1,6 +1,6 @@
 import sys
 
-from sqlalchemy import text, select
+from sqlalchemy import select
 from database import engine, packages
 
 from functions import *
