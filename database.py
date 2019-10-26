@@ -17,3 +17,7 @@ def initiate_engine():
 
     meta.create_all(engine)
     return packages, engine
+
+
+if __name__ == '__main__':
+    initiate_engine()
