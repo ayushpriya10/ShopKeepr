@@ -7,7 +7,7 @@ def delete_dependencies(conn, parent_pid, db):
     flag = True
 
     for _row in result:
-        common_dependencies = db.select().where(db.c.name == _row[1])
+        common_dependencies = conn.execute(db.select().where(db.c.name == _row[1]))
 
         for _com_dep in common_dependencies:
             if _com_dep[3] != parent_pid:
@@ -25,7 +25,7 @@ def perform_remove_module(conn, packages_to_uninstall, db):
         parent_pid = check_if_exists(conn, package, db)
 
         if parent_pid is not None:
-            delete_dependencies(conn, parent_pid, db)
+            delete_dependencies(conn, parent_pid[0], db)
             delete_package(conn, package, parent_pid, db)
         else:
             print("Package has not been installed")

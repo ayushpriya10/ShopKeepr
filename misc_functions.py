@@ -20,7 +20,7 @@ def uninstall(package):
 
 
 def delete_package(conn, package, pid, db):
-    query = db.delete().where(db.c.pid == pid)
+    query = db.delete().where(db.c.pid == pid[0])
     conn.execute(query)
     uninstall(package)
 
@@ -29,7 +29,7 @@ def check_if_exists(conn, package, db):
     package_exists = select([db.c.pid]).where(db.c.name == package)
     result = conn.execute(package_exists)
 
-    return result.fetchone()[0]
+    return result.fetchone()
 
 
 def get_version(package):
