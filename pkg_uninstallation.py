@@ -37,7 +37,3 @@ def uninstall_packages(packages_to_uninstall, db, engine):
     conn = open_database(engine)
     perform_remove_module(conn, packages_to_uninstall, db)
     update_requirements_file(conn, db)
-
-
-if __name__ == '__main__':
-    uninstall_packages(packages_to_uninstall=[], db="", engine="")
