@@ -3,10 +3,9 @@ from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy import create_engine
 
 
-def initiate_engine():
+class Database():
     engine = create_engine(f'sqlite:///packages.db', echo=True)
     meta = MetaData()
-
     packages = Table(
         'packages', meta,
         Column('pid', Integer, primary_key=True, autoincrement=True),
@@ -15,10 +14,10 @@ def initiate_engine():
         Column('parent_id', String, nullable=True)
     )
 
-    meta.create_all(engine)
-    
-    return packages, engine
+    def initiate_engine(self):
+        self.meta.create_all(self.engine)
 
+        return self.packages, self.engine
 
-if __name__ == '__main__':
-    initiate_engine()
+    if __name__ == '__main__':
+        initiate_engine()
