@@ -15,5 +15,5 @@ def update_packages(packages_to_update, db, conn):
         else:
             return False
     
-    update_requirements_file()
+    update_requirements_file(conn, db)
 
