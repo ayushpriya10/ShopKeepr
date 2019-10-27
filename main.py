@@ -1,18 +1,10 @@
 import sys
 
 from db_management import initiate_engine
-from pkg_installation import buy
-from pkg_updation import restock
-from pkg_uninstallation import sell
+from pkg_installation import install_package
+from pkg_updation import update_packages
+from pkg_uninstallation import uninstall_packages
 
-
-# packages_to_install = sys.argv[1:]
-
-# buy(packages_to_install, db, engine)
-
-# packages_to_uninstall = sys.argv[1:]
-
-# sell(packages_to_uninstall, db, engine)
 
 if __name__ == "__main__":
     db, engine = initiate_engine()
@@ -21,13 +13,13 @@ if __name__ == "__main__":
     packages = sys.argv[2:]
 
     if command == "install" or command == "i":
-        buy(packages, db, engine)
+        install_package(packages, db, engine)
     
     elif command == "uninstall" or command == "un":
-        sell(packages, db, engine)
+        uninstall_packages(packages, db, engine)
     
     elif command == "update" or command == "up":
-        restock(packages, db, engine)
+        update_packages(packages, db, engine)
     
     elif command == "help" or command == "h" or command == "?":
         print("[+] Usage instructions:")

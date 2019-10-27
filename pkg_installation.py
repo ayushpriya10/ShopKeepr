@@ -49,7 +49,7 @@ def perform_add_module(conn, packages_to_install, db):
             return False
 
 
-def buy(packages_to_install, db, engine):
+def install_package(packages_to_install, db, engine):
     conn = open_database(engine)
     perform_add_module(conn, packages_to_install, db)
     update_requirements_file(conn, db)
