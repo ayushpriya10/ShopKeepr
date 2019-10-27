@@ -52,7 +52,7 @@ def perform_add_module(conn, packages_to_install, db):
 def buy(packages_to_install, db, engine):
     conn = open_database(engine)
     perform_add_module(conn, packages_to_install, db)
-    update_requirements_file()
+    update_requirements_file(conn, db)
 
 
 if __name__ == '__main__':
