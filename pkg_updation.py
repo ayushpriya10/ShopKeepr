@@ -1,4 +1,4 @@
-from functions import check_if_exists, install, get_version
+from misc_functions import check_if_exists, install, get_version
 
 
 def restock(packages_to_update, db, conn):

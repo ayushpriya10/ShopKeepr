@@ -1,6 +1,6 @@
 import pkg_resources
 
-from functions import open_database, check_if_exists, install, get_version
+from misc_functions import open_database, check_if_exists, install, get_version
 
 
 def add_dependency(conn, name, parent_pid, db):
