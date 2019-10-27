@@ -35,7 +35,7 @@ def perform_remove_module(conn, packages_to_uninstall, db):
 
 
 
-def sell(packages_to_uninstall, db, engine):
+def uninstall_packages(packages_to_uninstall, db, engine):
     conn = open_database(engine)
     perform_remove_module(conn, packages_to_uninstall, db)
     update_requirements_file()
