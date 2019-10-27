@@ -1,20 +1,22 @@
+from pathlib import Path
+from sqlalchemy import create_engine
 import sys
 
-from sqlalchemy import create_engine
-
-from db_management import initiate_engine, Database
+from db_management import Database
 from pkg_installation import install_packages
 from pkg_updation import update_packages
 from pkg_uninstallation import uninstall_packages
-from pathlib import Path
+
 
 if __name__ == "__main__":
     dbfile = Path("packages.db")
+    database = Database()
+    engine = database.engine
+    db = database.packages
+    
     if not dbfile.is_file():
-        db, engine = Database.initiate_engine()
-    else:
-        engine = Database.engine
-        db = Database.packages
+        db, engine = database.initiate_engine()
+
 
     command = sys.argv[1]
     packages = sys.argv[2:]

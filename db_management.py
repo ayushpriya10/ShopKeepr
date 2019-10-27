@@ -19,5 +19,6 @@ class Database():
 
         return self.packages, self.engine
 
-    if __name__ == '__main__':
-        initiate_engine()
+
+if __name__ == '__main__':
+    initiate_engine()
