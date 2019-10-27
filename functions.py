@@ -1,12 +1,12 @@
-import subprocess
-
 import pkg_resources
 from sqlalchemy import select
+import subprocess
 
 
 def open_database(engine):
     conn = engine.connect()
     print("Database Opened")
+
     return conn
 
 
@@ -27,6 +27,7 @@ def delete_package(conn, package, pid, db):
 def check_if_exists(conn, package, db):
     package_exists = select([db.c.pid]).where(db.c.name == package)
     result = conn.execute(package_exists)
+    
     return result.fetchone()[0]
 
 
