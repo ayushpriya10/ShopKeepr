@@ -4,10 +4,12 @@ from db_management import initiate_engine
 from pkg_installation import install_packages
 from pkg_updation import update_packages
 from pkg_uninstallation import uninstall_packages
-
+from pathlib import Path
 
 if __name__ == "__main__":
-    db, engine = initiate_engine()
+    dbfile = Path("packages.db")
+    if not dbfile.is_file():
+        db, engine = initiate_engine()
 
     command = sys.argv[1]
     packages = sys.argv[2:]

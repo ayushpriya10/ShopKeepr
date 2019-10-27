@@ -35,5 +35,8 @@ def perform_remove_module(conn, packages_to_uninstall, db):
 
 def uninstall_packages(packages_to_uninstall, db, engine):
     conn = open_database(engine)
+    print("Connection Established with database")
     perform_remove_module(conn, packages_to_uninstall, db)
+    print("Module Removed")
     update_requirements_file(conn, db)
+    print("Update Requirements")
