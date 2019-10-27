@@ -40,4 +40,4 @@ def uninstall_packages(packages_to_uninstall, db, engine):
 
 
 if __name__ == '__main__':
-    sell(packages_to_uninstall=[], db="", engine="")
+    uninstall_packages(packages_to_uninstall=[], db="", engine="")

@@ -21,15 +21,16 @@ def add_package(conn, package, db):
         version=get_version(package),
         parent_id=None
     )
-    
+
     result = conn.execute(primary_package_insert_query)
-    
+
     return result.inserted_primary_key[0]
+
 
 # Function to retrieve a list of the dependencies of the package
 def get_dependencies(package):
     _package = pkg_resources.working_set.by_key[package]
-    
+
     return [str(r) for r in _package.requires()]
 
 
@@ -49,11 +50,11 @@ def perform_add_module(conn, packages_to_install, db):
             return False
 
 
-def install_package(packages_to_install, db, engine):
+def install_packages(packages_to_install, db, engine):
     conn = open_database(engine)
     perform_add_module(conn, packages_to_install, db)
     update_requirements_file(conn, db)
 
 
 if __name__ == '__main__':
-    buy(packages_to_install=[], db="", engine="")
+    install_packages(packages_to_install=[], db="", engine="")
