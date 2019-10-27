@@ -1,4 +1,4 @@
-from misc_functions import open_database, check_if_exists, uninstall, delete_package
+from misc_functions import open_database, check_if_exists, uninstall, delete_package, update_requirements_file
 
 
 def delete_dependencies(conn, parent_pid, db):
@@ -38,6 +38,7 @@ def perform_remove_module(conn, packages_to_uninstall, db):
 def sell(packages_to_uninstall, db, engine):
     conn = open_database(engine)
     perform_remove_module(conn, packages_to_uninstall, db)
+    update_requirements_file()
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import pkg_resources
 
-from misc_functions import open_database, check_if_exists, install, get_version
+from misc_functions import open_database, check_if_exists, install, get_version, update_requirements_file
 
 
 def add_dependency(conn, name, parent_pid, db):
@@ -51,8 +51,8 @@ def perform_add_module(conn, packages_to_install, db):
 
 def buy(packages_to_install, db, engine):
     conn = open_database(engine)
-
     perform_add_module(conn, packages_to_install, db)
+    update_requirements_file()
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from misc_functions import check_if_exists, install, get_version
+from misc_functions import check_if_exists, install, get_version, update_requirements_file
 
 
 def restock(packages_to_update, db, conn):
@@ -14,4 +14,6 @@ def restock(packages_to_update, db, conn):
         
         else:
             return False
+    
+    update_requirements_file()
 

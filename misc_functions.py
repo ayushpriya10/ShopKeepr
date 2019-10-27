@@ -33,3 +33,32 @@ def check_if_exists(conn, package, db):
 
 def get_version(package):
     return pkg_resources.get_distribution(package).version
+
+
+def update_requirements_file(db):
+    # TODO: add relevant code to fetch all top level packages, then remove this comment.
+    result = select([db.c.name, db.c.version]).where(db.c.parent_id == None)
+
+    # Remove the below comment:
+    '''
+    assumed structure of name, version of the packages:
+    packages = [
+        [package_name, version],
+        [package_name, version],
+        ...
+    ]
+    '''
+
+    string = str()
+
+    for val in packages:
+        if val[1]:
+            string += val[0] + "==" + val[1]
+        else:
+            string += val[0]
+        
+        string += "\n"
+    
+    requirements_file = open('requirements.txt', 'w')
+    requirements_file.write(string)
+    requirements_file.close()
