@@ -56,5 +56,4 @@ def install_packages(packages_to_install, db, engine):
     update_requirements_file(conn, db)
 
 
-if __name__ == '__main__':
-    install_packages(packages_to_install=[], db="", engine="")
+

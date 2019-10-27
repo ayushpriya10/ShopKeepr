@@ -3,7 +3,7 @@ from misc_functions import check_if_exists, install, get_version, update_require
 
 def update_packages(packages_to_update, db, conn):
     for package in packages_to_update:
-        pid = check_if_exists(package)
+        pid = check_if_exists(conn, package, db)
         
         if pid is not None:
             install(package)
@@ -15,5 +15,5 @@ def update_packages(packages_to_update, db, conn):
         else:
             return False
     
-    update_requirements_file()
+    update_requirements_file(conn, db)
 
