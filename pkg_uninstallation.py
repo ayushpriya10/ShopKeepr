@@ -23,11 +23,13 @@ def delete_dependencies(conn, parent_pid, db):
 
 def perform_remove_module(conn, packages_to_uninstall, db):
     for package in packages_to_uninstall:
-        parent_pid = check_if_exists(conn, package, version=get_version(package), db=db)
-
-        if parent_pid is not None:
-            delete_dependencies(conn, parent_pid[0], db)
-            delete_package(conn, package, parent_pid, db)
+        parent_pid_list = check_if_exists(conn, package, version=None, db=db)
+        print("Pid List")
+        print(parent_pid_list)
+        if parent_pid_list[0] is not None:
+            for parent_pid in parent_pid_list:
+                delete_dependencies(conn, parent_pid,  db)
+                delete_package(conn, package, parent_pid, db)
         else:
             print("Package has not been installed")
 

@@ -20,8 +20,8 @@ def uninstall(package):
 
 
 def delete_package(conn, package, pid, db):
-    print(pid[0])
-    query = db.delete().where(db.c.pid == pid[0])
+    print(pid)
+    query = db.delete().where(db.c.pid == pid)
     conn.execute(query)
     uninstall(package)
 
@@ -33,12 +33,22 @@ def check_if_exists(conn, package_name, version, db):
         package_exists = select([db.c.pid]).where(and_(db.c.name == package_name))
 
     result = conn.execute(package_exists)
+    print("results of check if exists query")
+    print(result)
+    pid_list=[]
+    for _row in result:
+        print(_row[0])
+        pid_list.append(_row[0])
 
-    return result.fetchone()
+    return pid_list
 
 
 def get_version(package):
-    return pkg_resources.get_distribution(package).version
+    if "==" in package:
+        version = package[package.index("==")+2:]
+        return version
+    else:
+        return pkg_resources.get_distribution(package).version
 
 
 def update_requirements_file(conn, db):

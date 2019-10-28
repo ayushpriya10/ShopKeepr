@@ -1,3 +1,5 @@
+import importlib
+
 import pkg_resources
 
 from misc_functions import open_database, check_if_exists, install, get_version, update_requirements_file
@@ -29,8 +31,10 @@ def add_package(conn, package, package_name,  db):
 
 # Function to retrieve a list of the dependencies of the package
 def get_dependencies(package_name):
+    importlib.reload(pkg_resources)
     _package = pkg_resources.working_set.by_key[package_name]
-
+    print("Looking for dependencies of: ")
+    print(_package)
     return [str(r) for r in _package.requires()]
 
 
@@ -46,7 +50,7 @@ def perform_add_module(conn, packages_to_install, db):
         print(version)
         exists = check_if_exists(conn, package_name, version, db)
 
-        if exists is None:
+        if len(exists) == 0 :
             pid = add_package(conn, package, package_name, db)
 
             dependencies = get_dependencies(package_name)
