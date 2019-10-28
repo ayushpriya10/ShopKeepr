@@ -3,6 +3,7 @@ import importlib
 import pkg_resources
 
 from misc_functions import open_database, check_if_exists, install, get_version, update_requirements_file
+from pkg_updation import update_packages
 
 
 def add_dependency(conn, name, parent_pid, db):
@@ -48,9 +49,11 @@ def perform_add_module(conn, packages_to_install, db):
             version = None
         print(package_name)
         print(version)
-        exists = check_if_exists(conn, package_name, version, db)
+        exists = check_if_exists(conn, package_name, version=None, db=db)
+        if len(exists) == 1:
+            update_packages(packages_to_update=[package], db=db, conn=conn)
 
-        if len(exists) == 0 :
+        if len(exists) == 0:
             pid = add_package(conn, package, package_name, db)
 
             dependencies = get_dependencies(package_name)

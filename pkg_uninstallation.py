@@ -26,7 +26,7 @@ def perform_remove_module(conn, packages_to_uninstall, db):
         parent_pid_list = check_if_exists(conn, package, version=None, db=db)
         print("Pid List")
         print(parent_pid_list)
-        if parent_pid_list[0] is not None:
+        if parent_pid_list is not None:
             for parent_pid in parent_pid_list:
                 delete_dependencies(conn, parent_pid,  db)
                 delete_package(conn, package, parent_pid, db)

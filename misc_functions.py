@@ -1,3 +1,4 @@
+import importlib
 import subprocess
 
 import pkg_resources
@@ -45,9 +46,11 @@ def check_if_exists(conn, package_name, version, db):
 
 def get_version(package):
     if "==" in package:
+        print("Found ==  in package name")
         version = package[package.index("==")+2:]
         return version
     else:
+        importlib.reload(pkg_resources)
         return pkg_resources.get_distribution(package).version
 
 
