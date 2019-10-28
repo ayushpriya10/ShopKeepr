@@ -55,12 +55,15 @@ def get_version(package):
 
 
 def update_requirements_file(conn, db):
-    result = conn.execute(select([db.c.name, db.c.version]).where(db.c.parent_id is None))
+    result = conn.execute(select([db.c.name, db.c.version]))
     packages = []
+    print("Result is")
+    print(result)
     for _row in result:
-        packages += [_row[0], _row[1]]
+        print(_row[0])
+        packages.append([_row[0], _row[1]])
 
-    string = str()
+    string = ""
 
     for val in packages:
         if val[1]:
@@ -69,7 +72,8 @@ def update_requirements_file(conn, db):
             string += val[0]
 
         string += "\n"
-
+    print("String = ")
+    print(string)
     requirements_file = open('requirements.txt', 'w')
     requirements_file.write(string)
     requirements_file.close()

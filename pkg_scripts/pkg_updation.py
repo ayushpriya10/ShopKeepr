@@ -3,7 +3,10 @@ from pkg_scripts.misc_functions import check_if_exists, install, get_version, up
 
 def update_packages(packages_to_update, db, conn):
     for package in packages_to_update:
-        package_name = package[:package.index("=")]
+        if '==' in package:
+            package_name = package[:package.index("=")]
+        else:
+            package_name = package
 
         pid = check_if_exists(conn, package_name, version=None, db=db)
         print("pid = ")
