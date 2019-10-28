@@ -1,4 +1,5 @@
-from misc_functions import open_database, check_if_exists, uninstall, delete_package, update_requirements_file
+from misc_functions import open_database, check_if_exists, uninstall, delete_package, update_requirements_file, \
+    get_version
 
 
 def delete_dependencies(conn, parent_pid, db):
@@ -22,15 +23,13 @@ def delete_dependencies(conn, parent_pid, db):
 
 def perform_remove_module(conn, packages_to_uninstall, db):
     for package in packages_to_uninstall:
-        parent_pid = check_if_exists(conn, package, db)
+        parent_pid = check_if_exists(conn, package, version=get_version(package), db=db)
 
         if parent_pid is not None:
             delete_dependencies(conn, parent_pid[0], db)
             delete_package(conn, package, parent_pid, db)
         else:
             print("Package has not been installed")
-
-            return False
 
 
 def uninstall_packages(packages_to_uninstall, db, engine):

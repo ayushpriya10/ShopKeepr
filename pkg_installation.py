@@ -13,11 +13,11 @@ def add_dependency(conn, name, parent_pid, db):
     conn.execute(dependency_package_insert_query)
 
 
-def add_package(conn, package, db):
-    check_if_exists(conn, package, db)
+def add_package(conn, package, package_name,  db):
+    print("Installing: " + package)
     install(package)
     primary_package_insert_query = db.insert().values(
-        name=package,
+        name=package_name,
         version=get_version(package),
         parent_id=None
     )
@@ -28,20 +28,28 @@ def add_package(conn, package, db):
 
 
 # Function to retrieve a list of the dependencies of the package
-def get_dependencies(package):
-    _package = pkg_resources.working_set.by_key[package]
+def get_dependencies(package_name):
+    _package = pkg_resources.working_set.by_key[package_name]
 
     return [str(r) for r in _package.requires()]
 
 
 def perform_add_module(conn, packages_to_install, db):
     for package in packages_to_install:
-        exists = check_if_exists(conn, package, db)
+        if "==" in package:
+            package_name = package[:package.index("=")]
+            version = package[package.index("==")+2:]
+        else:
+            package_name = package
+            version = None
+        print(package_name)
+        print(version)
+        exists = check_if_exists(conn, package_name, version, db)
 
         if exists is None:
-            pid = add_package(conn, package, db)
+            pid = add_package(conn, package, package_name, db)
 
-            dependencies = get_dependencies(package)
+            dependencies = get_dependencies(package_name)
             for dep in dependencies:
                 add_dependency(conn, dep, pid, db)
 

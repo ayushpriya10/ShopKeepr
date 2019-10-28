@@ -1,7 +1,7 @@
 import subprocess
 
 import pkg_resources
-from sqlalchemy import select
+from sqlalchemy import select, and_
 
 
 def open_database(engine):
@@ -12,21 +12,26 @@ def open_database(engine):
 
 
 def install(package):  # Function to install the given packaged
-    subprocess.run(["pip", "install", package], capture_output=True)
+    subprocess.run(["pip", "install", package])
 
 
 def uninstall(package):
-    subprocess.run(["pip", "uninstall", package], capture_output=True)
+    subprocess.run(["pip", "uninstall", package, "-y"])
 
 
 def delete_package(conn, package, pid, db):
+    print(pid[0])
     query = db.delete().where(db.c.pid == pid[0])
     conn.execute(query)
     uninstall(package)
 
 
-def check_if_exists(conn, package, db):
-    package_exists = select([db.c.pid]).where(db.c.name == package)
+def check_if_exists(conn, package_name, version, db):
+    if version is not None:
+        package_exists = select([db.c.pid]).where(and_(db.c.name == package_name, db.c.version == version))
+    else:
+        package_exists = select([db.c.pid]).where(and_(db.c.name == package_name))
+
     result = conn.execute(package_exists)
 
     return result.fetchone()
