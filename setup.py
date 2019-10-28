@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-REQUIREMENTS = ['importlib', 'subprocess', 'pkg_resources', 'sqlalchemy', 'sys', 'pathlib']
+REQUIREMENTS = ['sqlalchemy']
 
 
 
