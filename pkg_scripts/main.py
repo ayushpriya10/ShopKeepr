@@ -32,28 +32,30 @@ def run_application():
         print("[+] Usage instructions:")
         print("""
 
-                    ```bash
-                    keepr <command> <package list>
-                    ```
-                    
-                    Commands:
-                    
-                    * install - Install Packages
-                    * uninstall - Uninstall Packages and dependencies
-                    * update - Update an existing package
-                    * help - Display Help information
-                    * credits - List author credits
-                    
-                    Example:
-                    ```bash
-                    keepr install django==2.2 pymongo==1.2
-                    ```
+    + Syntax:
+    
+    keepr <command> <package list>
+    
+    
+    + Commands:
+    
+    * install - Install Packages
+    * uninstall - Uninstall Packages and dependencies
+    * update - Update an existing package
+    * help - Display Help information
+    * credits - List author credits
+    
+    
+    + Example:    
+    
+    keepr install django==2.2 pymongo==1.2
+
             """)
 
     elif command == "credits" or command == "c":
         print(
             "This application was developed by:",
-            "Sameeran Bandishti [sameeranbandishti93@ieee.org]",
+            "Sameeran Bandishti [sameeranbandishti@ieee.org]",
             "Ayush Priya [ayushpriya10@ieee.org]\n",
             "For any help or queries about the application, please contact the team at shopkeepr3.6@gmail.com",
             sep='\n'
