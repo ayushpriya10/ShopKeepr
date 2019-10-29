@@ -13,7 +13,7 @@ REQUIREMENTS = ['sqlalchemy']
 
 
 try:
-    fh = codecs.open("README.md", encoding="utf-8")
+    fh = codecs.open("DESCRIPTION.md", encoding="utf-8")
     long_description = fh.read()
     fh.close()
 except FileNotFoundError:
