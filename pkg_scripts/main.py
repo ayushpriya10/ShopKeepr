@@ -30,8 +30,34 @@ def run_application():
 
     elif command == "help" or command == "h" or command == "?":
         print("[+] Usage instructions:")
+        print("""
 
-        # TODO: add usage instructions
+                    ```bash
+                    keepr <command> <package list>
+                    ```
+                    
+                    Commands:
+                    
+                    * install - Install Packages
+                    * uninstall - Uninstall Packages and dependencies
+                    * update - Update an existing package
+                    * help - Display Help information
+                    * credits - List author credits
+                    
+                    Example:
+                    ```bash
+                    keepr install django==2.2 pymongo==1.2
+                    ```
+            """)
+
+    elif command == "credits" or command == "c":
+        print(
+            "This application was developed by:",
+            "Sameeran Bandishti [sameeranbandishti93@ieee.org]",
+            "Ayush Priya [ayushpriya10@ieee.org]\n",
+            "For any help or queries about the application, please contact the team at shopkeepr3.6@gmail.com",
+            sep='\n'
+        )
 
     else:
         print('[-] %s is not a command. Please use "help" to look at usage instructions.' % command)
