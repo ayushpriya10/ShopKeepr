@@ -2,8 +2,8 @@ import importlib
 
 import pkg_resources
 
-from pkg_scripts.misc_functions import open_database, check_if_exists, install, get_version, update_requirements_file
-from pkg_scripts.pkg_updation import update_packages
+from misc_functions import open_database, check_if_exists, install, get_version, update_requirements_file
+from pkg_updation import update_packages
 
 
 def add_dependency(conn, name, parent_pid, db):

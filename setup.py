@@ -21,7 +21,7 @@ except FileNotFoundError:
 
 setup(
         name="shopkeepr",
-        version="1.0.13",
+        version="1.0.14",
         description="A pip wrapper to automate requirements.txt handling",
         long_description=long_description,
         url="https://github.com/ayushpriya10/ShopKeepr",
