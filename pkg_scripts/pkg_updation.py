@@ -1,4 +1,4 @@
-from misc_functions import check_if_exists, install, get_version, update_requirements_file
+from pkg_scripts.misc_functions import check_if_exists, install, get_version, update_requirements_file
 
 
 def update_packages(packages_to_update, db, conn):

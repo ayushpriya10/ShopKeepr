@@ -1,10 +1,10 @@
 from pathlib import Path
 import sys
 
-from db_management import Database
-from pkg_installation import install_packages
-from pkg_updation import update_packages
-from pkg_uninstallation import uninstall_packages
+from pkg_scripts.db_management import Database
+from pkg_scripts.pkg_installation import install_packages
+from pkg_scripts.pkg_updation import update_packages
+from pkg_scripts.pkg_uninstallation import uninstall_packages
 
 
 def run_application():
