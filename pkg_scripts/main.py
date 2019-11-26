@@ -34,7 +34,7 @@ def run_application():
     elif command == "update" or command == "up":
         update_packages(packages, db, engine)
 
-    elif command == "help" or command == "h" or command == "?" or command == "":
+    elif command == "help" or command == "h" or command == "?" or command is None:
         print("[+] Usage instructions:")
         print("""
 
