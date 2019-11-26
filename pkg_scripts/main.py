@@ -2,9 +2,12 @@ from pathlib import Path
 import sys
 
 from pkg_scripts.db_management import Database
-from pkg_scripts.pkg_installation import install_packages
+from pkg_scripts.pkg_installation import install_packages, install_requirements
 from pkg_scripts.pkg_updation import update_packages
 from pkg_scripts.pkg_uninstallation import uninstall_packages
+
+
+
 
 
 def run_application():
@@ -22,13 +25,16 @@ def run_application():
     if command == "install" or command == "i":
         install_packages(packages, db, engine)
 
+    elif command == "req" or command == 'r':
+        install_requirements(db, engine)
+
     elif command == "uninstall" or command == "un":
         uninstall_packages(packages, db, engine)
 
     elif command == "update" or command == "up":
         update_packages(packages, db, engine)
 
-    elif command == "help" or command == "h" or command == "?":
+    elif command == "help" or command == "h" or command == "?" or command == "":
         print("[+] Usage instructions:")
         print("""
 
@@ -40,6 +46,7 @@ def run_application():
     + Commands:
     
     * install - Install Packages
+    * req - Install from requirements.txt
     * uninstall - Uninstall Packages and dependencies
     * update - Update an existing package
     * help - Display Help information
@@ -49,7 +56,8 @@ def run_application():
     + Example:    
     
     keepr install django==2.2 pymongo==1.2
-
+    OR
+    keepr req
             """)
 
     elif command == "credits" or command == "c":

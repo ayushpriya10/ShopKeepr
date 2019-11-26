@@ -16,7 +16,7 @@ def add_dependency(conn, name, parent_pid, db):
     conn.execute(dependency_package_insert_query)
 
 
-def add_package(conn, package, package_name,  db):
+def add_package(conn, package, package_name, db):
     print("Installing: " + package)
     install(package)
     primary_package_insert_query = db.insert().values(
@@ -43,7 +43,7 @@ def perform_add_module(conn, packages_to_install, db):
     for package in packages_to_install:
         if "==" in package:
             package_name = package[:package.index("=")]
-            version = package[package.index("==")+2:]
+            version = package[package.index("==") + 2:]
         else:
             package_name = package
             version = None
@@ -71,4 +71,7 @@ def install_packages(packages_to_install, db, engine):
     update_requirements_file(conn, db)
 
 
-
+def install_requirements(db, engine):
+    requirements_file = open('requirements.txt', 'r')
+    packages = requirements_file.readlines()
+    install_packages(packages, db, engine)
