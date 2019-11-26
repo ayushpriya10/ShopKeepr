@@ -21,8 +21,8 @@ except FileNotFoundError:
 
 setup(
         name="shopkeepr",
-        version="1.0.14",
-        description="A command line for project management. Made for Developers",
+        version="1.0.15",
+        description="A command line tool for project management. Made for Developers",
         long_description=long_description,
         url="https://github.com/ayushpriya10/ShopKeepr",
         author="Sameeran Bandishti, Ayush Priya",
