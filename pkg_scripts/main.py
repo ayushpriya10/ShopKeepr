@@ -2,12 +2,10 @@ from pathlib import Path
 import sys
 
 from pkg_scripts.db_management import Database
+from pkg_scripts.environment_management import activate_env, deactivate_env
 from pkg_scripts.pkg_installation import install_packages, install_requirements
 from pkg_scripts.pkg_updation import update_packages
 from pkg_scripts.pkg_uninstallation import uninstall_packages
-
-
-
 
 
 def run_application():
@@ -22,7 +20,13 @@ def run_application():
     command = sys.argv[1]
     packages = sys.argv[2:]
 
-    if command == "install" or command == "i":
+    if command == "activate":
+        activate_env(db, engine)
+
+    elif command == "deactivate":
+        deactivate_env(db, engine)
+
+    elif command == "install" or command == "i":
         install_packages(packages, db, engine)
 
     elif command == "req" or command == 'r':

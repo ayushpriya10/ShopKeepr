@@ -55,3 +55,4 @@ def uninstall_packages(packages_to_uninstall, db, engine):
     print("Module Removed")
     update_requirements_file(conn, db)
     print("Update Requirements")
+    conn.close()

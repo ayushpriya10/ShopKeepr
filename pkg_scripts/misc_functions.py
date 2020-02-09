@@ -36,7 +36,7 @@ def check_if_exists(conn, package_name, version, db):
     result = conn.execute(package_exists)
     print("results of check if exists query")
     print(result)
-    pid_list=[]
+    pid_list = []
     for _row in result:
         print(_row[0])
         pid_list.append(_row[0])
@@ -47,7 +47,7 @@ def check_if_exists(conn, package_name, version, db):
 def get_version(package):
     if "==" in package:
         print("Found ==  in package name")
-        version = package[package.index("==")+2:]
+        version = package[package.index("==") + 2:]
         return version
     else:
         importlib.reload(pkg_resources)

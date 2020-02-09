@@ -69,6 +69,7 @@ def install_packages(packages_to_install, db, engine):
     conn = open_database(engine)
     perform_add_module(conn, packages_to_install, db)
     update_requirements_file(conn, db)
+    conn.close()
 
 
 def install_requirements(db, engine):

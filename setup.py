@@ -10,8 +10,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 REQUIREMENTS = ['sqlalchemy']
 
 
-
-
 try:
     fh = codecs.open("DESCRIPTION.md", encoding="utf-8")
     long_description = fh.read()
@@ -21,7 +19,7 @@ except FileNotFoundError:
 
 setup(
         name="shopkeepr",
-        version="1.0.15",
+        version="1.1.1",
         description="A command line tool for project management. Made for Developers",
         long_description=long_description,
         url="https://github.com/ayushpriya10/ShopKeepr",
