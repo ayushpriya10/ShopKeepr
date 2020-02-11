@@ -8,6 +8,12 @@ from pkg_scripts.pkg_updation import update_packages
 from pkg_scripts.pkg_uninstallation import uninstall_packages
 
 
+INFORMATION = {
+    'name': "shopkeepr",
+    'version': "1.1.4",
+}
+
+
 def run_application():
     dbfile = Path("packages.db")
     database = Database()
@@ -26,19 +32,22 @@ def run_application():
     elif command == "deactivate":
         deactivate_env(db, engine)
 
-    elif command == "install" or command == "i":
+    elif command == "install" or command == "-i":
         install_packages(packages, db, engine)
 
-    elif command == "req" or command == 'r':
+    elif command == "req" or command == '-r':
         install_requirements(db, engine)
 
-    elif command == "uninstall" or command == "un":
+    elif command == "uninstall" or command == "-un":
         uninstall_packages(packages, db, engine)
 
-    elif command == "update" or command == "up":
+    elif command == "update" or command == "-up":
         update_packages(packages, db, engine)
 
-    elif command == "help" or command == "h" or command == "?" or command is None:
+    elif command == '--version' or command == "-v":
+        print(INFORMATION['version'])
+
+    elif command == "--help" or command == "-h" or command == "?" or command is None:
         print("[+] Usage instructions:")
         print("""
 
@@ -64,7 +73,7 @@ def run_application():
     keepr req
             """)
 
-    elif command == "credits" or command == "c":
+    elif command == "--credits" or command == "-c":
         print(
             "This application was developed by:",
             "Sameeran Bandishti [sameeranbandishti@ieee.org]",

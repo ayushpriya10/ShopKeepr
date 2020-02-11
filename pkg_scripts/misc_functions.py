@@ -1,5 +1,6 @@
 import importlib
 import subprocess
+import sys
 
 import pkg_resources
 from sqlalchemy import select, and_
@@ -77,3 +78,8 @@ def update_requirements_file(conn, db):
     requirements_file = open('requirements.txt', 'w')
     requirements_file.write(string)
     requirements_file.close()
+
+
+def is_in_venv():
+    return (hasattr(sys, 'real_prefix') or
+            (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))

@@ -17,9 +17,11 @@ try:
 except FileNotFoundError:
     long_description = ""
 
+
+
 setup(
         name="shopkeepr",
-        version="1.1.1",
+        version="1.1.4",
         description="A command line tool for project management. Made for Developers",
         long_description=long_description,
         url="https://github.com/ayushpriya10/ShopKeepr",
