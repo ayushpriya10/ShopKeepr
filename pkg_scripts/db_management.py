@@ -49,6 +49,6 @@ class Requirements(Base):
             return f"Requirement<id={self.id}, name={self.name}, version={self.version}, parent dependency ={parent_dependency.name}> "
 
 
-def initialize():
+def initialize_db():
     Base.metadata.create_all(engine)
     print("Database Initialized")

@@ -3,7 +3,9 @@ import subprocess
 import sys
 
 import pkg_resources
-from sqlalchemy import select, and_
+from sqlalchemy import exists
+
+from pkg_scripts.db_management import Requirements
 
 
 def open_database(engine):
@@ -28,21 +30,12 @@ def delete_package(conn, package, pid, db):
     uninstall(package)
 
 
-def check_if_exists(conn, package_name, version, db):
-    if version is not None:
-        package_exists = select([db.c.pid]).where(and_(db.c.name == package_name, db.c.version == version))
+# Todo: Handle version numbers (Includes handling rollbacks to older versions)
+def check_if_exists(session, package_name):
+    if session.query(exists().where(Requirements.name == package_name)).scalar():
+        return True
     else:
-        package_exists = select([db.c.pid]).where(and_(db.c.name == package_name))
-
-    result = conn.execute(package_exists)
-    print("results of check if exists query")
-    print(result)
-    pid_list = []
-    for _row in result:
-        print(_row[0])
-        pid_list.append(_row[0])
-
-    return pid_list
+        return False
 
 
 def get_version(package):
@@ -55,17 +48,9 @@ def get_version(package):
         return pkg_resources.get_distribution(package).version
 
 
-def update_requirements_file(conn, db):
-    result = conn.execute(select([db.c.name, db.c.version]))
-    packages = []
-    print("Result is")
-    print(result)
-    for _row in result:
-        print(_row[0])
-        packages.append([_row[0], _row[1]])
-
+def update_requirements_file(session):
+    packages = session.query(Requirements.name, Requirements.id).all()
     string = ""
-
     for val in packages:
         if val[1]:
             string += val[0] + "==" + val[1]

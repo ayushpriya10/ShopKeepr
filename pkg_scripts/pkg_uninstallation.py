@@ -1,7 +1,8 @@
-from pkg_scripts.misc_functions import open_database, check_if_exists, uninstall, delete_package, update_requirements_file
+from pkg_scripts.db_management import Requirements
+from pkg_scripts.misc_functions import check_if_exists, uninstall, delete_package, update_requirements_file
 
 
-def delete_dependencies(conn, parent_pid, db):
+def delete_dependencies(session, requirement_id):
     select_dependencies = db.select().where(db.c.parent_id == parent_pid)
     result = conn.execute(select_dependencies)
     print("Selected Dependencies:")
@@ -31,27 +32,25 @@ def delete_dependencies(conn, parent_pid, db):
         flag = True
 
 
-def perform_remove_module(conn, packages_to_uninstall, db):
+def perform_remove_module(session, packages_to_uninstall):
     for package in packages_to_uninstall:
         if '==' in package:
             package_name = package[:package.index('=')]
         else:
             package_name = package
-        parent_pid_list = check_if_exists(conn, package_name, version=None, db=db)
-        print("Pid List")
-        print(parent_pid_list)
-        if parent_pid_list is not None:
-            for parent_pid in parent_pid_list:
-                delete_dependencies(conn, parent_pid, db)
-                delete_package(conn, package, parent_pid, db)
+        exists = check_if_exists(session, package_name)
+        if exists:
+            parent_package_id = session.query(Requirements.id).filter(Requirements.name == package_name).first()
+            for requirement_id in session.query(Requirements.parent_id.is_(parent_package_id)):
+                delete_dependencies(session, requirement_id)
+                delete_package(session, package, requirement_id)
         else:
             print("Package has not been installed")
 
 
-def uninstall_packages(packages_to_uninstall, db, engine):
-    conn = open_database(engine)
-    print("Connection Established with database")
-    perform_remove_module(conn, packages_to_uninstall, db)
+def uninstall_packages(Session, packages_to_uninstall):
+    session = Session()
+    perform_remove_module(session, packages_to_uninstall)
     print("Module Removed")
     update_requirements_file(conn, db)
     print("Update Requirements")

@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 
-from pkg_scripts.db_management import Database
+from pkg_scripts.db_management import Session, initialize_db
 from pkg_scripts.environment_management import activate_env, deactivate_env
 from pkg_scripts.pkg_installation import install_packages, install_requirements
 from pkg_scripts.pkg_updation import update_packages
@@ -10,36 +10,30 @@ from pkg_scripts.pkg_uninstallation import uninstall_packages
 
 INFORMATION = {
     'name': "shopkeepr",
-    'version': "1.1.4",
+    'version': "2.0.0",
 }
 
 
 def run_application():
-    dbfile = Path("packages.db")
-    database = Database()
-    engine = database.engine
-    db = database.packages
-
-    if not dbfile.is_file():
-        db, engine = database.initiate_engine()
+    initialize_db()
 
     command = sys.argv[1]
     packages = sys.argv[2:]
 
     if command == "activate":
-        activate_env(db, engine)
+        activate_env()
 
     elif command == "deactivate":
-        deactivate_env(db, engine)
+        deactivate_env()
 
     elif command == "install" or command == "-i":
-        install_packages(packages, db, engine)
+        install_packages(Session, packages)
 
     elif command == "req" or command == '-r':
-        install_requirements(db, engine)
+        install_requirements(Session)
 
     elif command == "uninstall" or command == "-un":
-        uninstall_packages(packages, db, engine)
+        uninstall_packages(Session, packages)
 
     elif command == "update" or command == "-up":
         update_packages(packages, db, engine)
