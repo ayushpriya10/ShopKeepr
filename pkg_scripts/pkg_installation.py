@@ -13,11 +13,18 @@ def add_dependency(session, name, parent_id):
     return
 
 
-def add_package(session, package_name_with_version, package_name):
-    print("Installing: " + package_name_with_version)
-    install(package_name_with_version)
+def add_package(session, package_name, version):
+    # print("Installing: " + package_name + "-" + "" if version is None else version)
+    if version is not None:
+        package_installation_name = package_name + "==" + version
+    else:
+        package_installation_name = package_name
 
-    package_instance = Requirements(name=package_name, version=get_version(package_name_with_version))
+    print(package_installation_name)
+    install(package_installation_name)
+
+    package_instance = Requirements(name=package_name,
+                                    version=get_version(package_name + ("==" + version) if version is not None else ""))
 
     session.add(package_instance)
 
@@ -33,22 +40,25 @@ def get_dependencies(package_name):
     return [str(r) for r in _package.requires()]
 
 
+# ToDo: Handle <, >, ~= and others
 def perform_add_module(session, packages_to_install):
-    for package_name_with_version in packages_to_install:
-        if "==" in package_name_with_version:
-            package_name = package_name_with_version[:package_name_with_version.index("=")]
-            version = package_name_with_version[package_name_with_version.index("==") + 2:]
+    print(f"Packages to install: {packages_to_install}")
+    for package_in_list in packages_to_install:
+        if "==" in package_in_list:
+            package_name = package_in_list[:package_in_list.index("=")]
+            version = package_in_list[package_in_list.index("==") + 2:]
         else:
-            package_name = package_name_with_version
+            package_name = package_in_list
             version = None
         print(package_name)
         print(version)
         exists = check_if_exists(session, package_name)
         if exists:
-            update_packages(packages_to_update=[package_name_with_version], session=session)
+            update_packages(packages_to_update=[package_in_list], session=session)
 
         else:
-            parent_id = add_package(session, package_name_with_version, package_name)
+            print()
+            parent_id = add_package(session, package_name, version)
             dependencies = get_dependencies(package_name)
             for dep in dependencies:
                 add_dependency(session, dep, parent_id)

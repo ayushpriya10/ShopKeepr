@@ -39,9 +39,10 @@ def check_if_exists(session, package_name):
 
 
 def get_version(package):
+    print(f"Package is {package}")
     if "==" in package:
         print("Found ==  in package name")
-        version = package[package.index("==") + 2:]
+        version = package[(package.index("==") + 2):]
         return version
     else:
         importlib.reload(pkg_resources)
@@ -49,11 +50,12 @@ def get_version(package):
 
 
 def update_requirements_file(session):
-    packages = session.query(Requirements.name, Requirements.id).all()
+    packages = session.query(Requirements).values(Requirements.name, Requirements.version)
     string = ""
     for val in packages:
+        print(val)
         if val[1]:
-            string += val[0] + "==" + val[1]
+            string += val[0] + "==" + str(val[1])
         else:
             string += val[0]
 

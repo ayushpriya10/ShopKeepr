@@ -2,33 +2,33 @@ from pkg_scripts.db_management import Requirements
 from pkg_scripts.misc_functions import check_if_exists, uninstall, delete_package, update_requirements_file
 
 
+# Todo: Start from here
 def delete_dependencies(session, requirement_id):
-    select_dependencies = db.select().where(db.c.parent_id == parent_pid)
-    result = conn.execute(select_dependencies)
-    print("Selected Dependencies:")
+    dependencies = session.query(Requirements).filter(Requirements.parent_id == requirement_id).all().values(
+        'name')
+    # print("Selected Dependencies:")
     # for _row in result:
     #     print(_row)
 
     flag = True
 
-    for _row in result:
-        common_dependencies = conn.execute(db.select().where(db.c.name == _row[1]))
-        print(f"List of entries for the dependency {_row[1]}")
+    for dep in dependencies:
+        common_dependencies = session.query(Requirements).filter(Requirements.name == dep).values('id')
+        print(f"List of entries for the dependency {dep}")
         # for _com_dep in  common_dependencies:
         #     print(_com_dep)
 
         for _com_dep in common_dependencies:
-            if int(_com_dep[3]) != parent_pid:
-                print(str(_com_dep[3]) + " " + str(parent_pid))
+            if _com_dep != requirement_id:
+                print(str(_com_dep[3]) + " " + str(requirement_id))
                 flag = False
 
         if flag:
             print("uninstalling:")
-            print(_row[1])
-            uninstall(_row[1])
+            print(dep)
+            uninstall(dep)
+            session.query(Requirements).filter(Requirements.name == dep).delete()
 
-        delete_dependency = db.delete().where(db.c.pid == _row[0])
-        conn.execute(delete_dependency)
         flag = True
 
 
@@ -52,6 +52,6 @@ def uninstall_packages(Session, packages_to_uninstall):
     session = Session()
     perform_remove_module(session, packages_to_uninstall)
     print("Module Removed")
-    update_requirements_file(conn, db)
+    update_requirements_file(session)
     print("Update Requirements")
-    conn.close()
+    session.close()

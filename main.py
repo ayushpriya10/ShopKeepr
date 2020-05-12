@@ -36,7 +36,8 @@ def run_application():
         uninstall_packages(Session, packages)
 
     elif command == "update" or command == "-up":
-        update_packages(packages, db, engine)
+        session = Session()
+        update_packages(packages, session)
 
     elif command == '--version' or command == "-v":
         print(INFORMATION['version'])
