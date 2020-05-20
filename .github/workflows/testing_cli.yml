@@ -25,8 +25,9 @@ jobs:
         python -m site
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install --upgrade virtualenv tox tox-gh-actions
-        
+
     - name: Run tox targets for ${{ matrix.python-version }}
-        run: python -m tox
+        run: |
+        python -m tox
       env:
         PLATFORM: ${{ matrix.platform }}
