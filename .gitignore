@@ -26,7 +26,7 @@ wheels/
 MANIFEST
 
 ## requirements file
-*.txt
+pkg_scripts/requirements.txt
 
 ## Databases
 *.db
