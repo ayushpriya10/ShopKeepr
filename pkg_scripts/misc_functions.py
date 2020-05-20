@@ -1,6 +1,7 @@
 import importlib
 import subprocess
 import sys
+import os
 
 import pkg_resources
 from sqlalchemy import select, and_
@@ -9,7 +10,6 @@ from sqlalchemy import select, and_
 def open_database(engine):
     conn = engine.connect()
     print("Database Opened")
-
     return conn
 
 

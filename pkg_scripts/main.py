@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys
+import os
 
 import click
 
@@ -20,8 +21,7 @@ class create_db(object):
     def __init__(self):
         
         """ For creating an instance of db to be shared as context"""    
-        
-        dbfile = Path("packages.db")
+        dbfile = Path('packages.db')
         database = Database()
         self.engine = database.engine
         self.db = database.packages
