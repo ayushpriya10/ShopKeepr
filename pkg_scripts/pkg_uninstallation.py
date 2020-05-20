@@ -1,4 +1,4 @@
-from pkg_scripts.misc_functions import open_database, check_if_exists, uninstall, delete_package, update_requirements_file
+from misc_functions import open_database, check_if_exists, uninstall, delete_package, update_requirements_file
 
 
 def delete_dependencies(conn, parent_pid, db):

@@ -1,11 +1,13 @@
 from pathlib import Path
 import sys
 
-from pkg_scripts.db_management import Database
-from pkg_scripts.environment_management import activate_env, deactivate_env
-from pkg_scripts.pkg_installation import install_packages, install_requirements
-from pkg_scripts.pkg_updation import update_packages
-from pkg_scripts.pkg_uninstallation import uninstall_packages
+import click
+
+from db_management import Database
+from environment_management import activate_env, deactivate_env
+from pkg_installation import install_packages, install_requirements
+from pkg_updation import update_packages
+from pkg_uninstallation import uninstall_packages
 
 
 INFORMATION = {
@@ -13,67 +15,26 @@ INFORMATION = {
     'version': "1.1.4",
 }
 
-
-def run_application():
-    dbfile = Path("packages.db")
-    database = Database()
-    engine = database.engine
-    db = database.packages
-
-    if not dbfile.is_file():
-        db, engine = database.initiate_engine()
-
-    command = sys.argv[1]
-    packages = sys.argv[2:]
-
-    if command == "activate":
-        activate_env(db, engine)
-
-    elif command == "deactivate":
-        deactivate_env(db, engine)
-
-    elif command == "install" or command == "-i":
-        install_packages(packages, db, engine)
-
-    elif command == "req" or command == '-r':
-        install_requirements(db, engine)
-
-    elif command == "uninstall" or command == "-un":
-        uninstall_packages(packages, db, engine)
-
-    elif command == "update" or command == "-up":
-        update_packages(packages, db, engine)
-
-    elif command == '--version' or command == "-v":
-        print(INFORMATION['version'])
-
-    elif command == "--help" or command == "-h" or command == "?" or command is None:
-        print("[+] Usage instructions:")
-        print("""
-
-    + Syntax:
+class create_db(object):
     
-    keepr <command> <package list>
-    
-    
-    + Commands:
-    
-    * install - Install Packages
-    * req - Install from requirements.txt
-    * uninstall - Uninstall Packages and dependencies
-    * update - Update an existing package
-    * help - Display Help information
-    * credits - List author credits
-    
-    
-    + Example:    
-    
-    keepr install django==2.2 pymongo==1.2
-    OR
-    keepr req
-            """)
+    def __init__(self):
+        
+        """ For creating an instance of db to be shared as context"""    
+        
+        dbfile = Path("packages.db")
+        database = Database()
+        self.engine = database.engine
+        self.db = database.packages
 
-    elif command == "--credits" or command == "-c":
+        if not dbfile.is_file():
+            self.db, self.engine = database.initiate_engine()
+
+@click.group(help='A CLI Tool for handling dangling dependencies')
+@click.version_option(INFORMATION['version'])
+@click.option('--credits', '-c', nargs=0, help="For showing credits of the project")
+@click.pass_context
+def run_application(ctx, credits):
+    if credits:
         print(
             "This application was developed by:",
             "Sameeran Bandishti [sameeranbandishti@ieee.org]",
@@ -81,9 +42,45 @@ def run_application():
             "For any help or queries about the application, please contact the team at shopkeepr3.6@gmail.com",
             sep='\n'
         )
+    ctx.obj = create_db()
 
+
+@run_application.command(help='Activating Virtual Environment')
+@click.pass_context
+def activate(ctx):
+    activate_env()
+
+
+@run_application.command(help='Deactivating Virtual Environment')
+@click.pass_context
+def deactivate(ctx):
+    deactivate_env()
+    
+
+@run_application.command(help='Install Packages')
+@click.argument('packages', nargs=-1, type=str)
+@click.option('--req','-r', nargs=1, type=str, help="Install file using requirements file")
+@click.option('--update','-u', nargs=1, type=str, help="Update an existing packages")
+@click.pass_context
+def install(ctx,req,packages,update):
+    """ install pkg1==1.0 pkg2=1.0 """
+    if req:
+        install_requirements(ctx.obj.db, ctx.obj.engine)
+    elif update:
+        update_packages(packages, ctx.obj.db, ctx.obj.engine)
+    elif packages:
+        install_packages(packages, ctx.obj.db, ctx.obj.engine)
     else:
-        print('[-] %s is not a command. Please use "help" to look at usage instructions.' % command)
+        click.echo("Give the package name to be installed")
+        
+
+@run_application.command(help='Uninstall Packages and dependencies')
+@click.argument('packages', nargs=-1, type=str)
+@click.pass_context
+def uninstall(ctx,packages):
+    """ install pkg1==1.0 pkg2=1.0 """
+    uninstall_packages(packages, ctx.obj.db, ctx.obj.engine)
+    
 
 
 if __name__ == "__main__":
