@@ -28,12 +28,12 @@ setup(
         author="Sameeran Bandishti, Ayush Priya",
         author_email="shopkeepr3.6@gmail.com",
         packages=find_packages(include=[
-            "pkg_scripts"
+            "keepr"
         ]),
         include_package_data=True,
         entry_points={
             "console_scripts": [
-                'keepr = pkg_scripts.main:run_application'
+                'keepr = keepr.main:run_application'
             ]
         },
         classifiers=[

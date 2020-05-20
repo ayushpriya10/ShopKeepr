@@ -2,7 +2,7 @@ import os
 import platform
 import subprocess
 
-from misc_functions import is_in_venv
+from keepr.misc_functions import is_in_venv
 
 
 def check_virtualenv_installation():

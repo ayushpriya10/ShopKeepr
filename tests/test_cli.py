@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from pkg_scripts.main import run_application
+from keepr.main import run_application
 
 def test_activate_env():
     runner = CliRunner()

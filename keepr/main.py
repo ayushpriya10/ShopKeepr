@@ -4,11 +4,11 @@ import os
 
 import click
 
-from db_management import Database
-from environment_management import activate_env, deactivate_env
-from pkg_installation import install_packages, install_requirements
-from pkg_updation import update_packages
-from pkg_uninstallation import uninstall_packages
+from keepr.db_management import Database
+from keepr.environment_management import activate_env, deactivate_env
+from keepr.pkg_installation import install_packages, install_requirements
+from keepr.pkg_updation import update_packages
+from keepr.pkg_uninstallation import uninstall_packages
 
 
 INFORMATION = {
