@@ -21,11 +21,12 @@ keepr <command> <package list>
 
 Commands:
 
+* activate - Activate virtualenv
 * install - Install Packages
 * uninstall - Uninstall Packages and dependencies
 * update - Update an existing package
 * help - Display Help information
-* credits - List author credits
+
 
 Example:
 ```bash
