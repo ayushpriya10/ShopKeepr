@@ -25,6 +25,9 @@ wheels/
 *.egg
 MANIFEST
 
+## tox file
+tox.ini
+
 ## requirements file
 pkg_scripts/requirements.txt
 
@@ -35,6 +38,9 @@ pkg_scripts/requirements.txt
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+
+## vscode folder
+.vscode
 
 # Installer logs
 pip-log.txt

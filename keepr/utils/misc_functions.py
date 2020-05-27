@@ -30,9 +30,11 @@ def delete_package(conn, package, pid, db):
 
 def check_if_exists(conn, package_name, version, db):
     if version is not None:
-        package_exists = select([db.c.pid]).where(and_(db.c.name == package_name, db.c.version == version))
+        package_exists = select([db.c.pid]).where(
+            and_(db.c.name == package_name, db.c.version == version))
     else:
-        package_exists = select([db.c.pid]).where(and_(db.c.name == package_name))
+        package_exists = select([db.c.pid]).where(
+            and_(db.c.name == package_name))
 
     result = conn.execute(package_exists)
     print("results of check if exists query")
@@ -81,5 +83,8 @@ def update_requirements_file(conn, db):
 
 
 def is_in_venv():
-    return (hasattr(sys, 'real_prefix') or
-            (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix))
+
+    if os.getenv('VIRTUAL_ENV'):
+        return True
+    else:
+        return False

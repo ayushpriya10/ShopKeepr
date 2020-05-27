@@ -5,35 +5,45 @@ import re
 
 from setuptools import setup, find_packages
 
-here = os.path.abspath(os.path.dirname(__file__))
+REQUIREMENTS = ['sqlalchemy','click']
 
-REQUIREMENTS = ['sqlalchemy']
+def read(rel_path):
+    here = os.path.abspath(os.path.dirname(__file__))
+    with codecs.open(os.path.join(here, rel_path), 'r') as fp:
+        return fp.read()
 
+def get_version(rel_path):
+    for line in read(rel_path).splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")
 
-try:
-    fh = codecs.open("DESCRIPTION.md", encoding="utf-8")
-    long_description = fh.read()
-    fh.close()
-except FileNotFoundError:
-    long_description = ""
-
+def get_long_description():
+    try:
+        with codecs.open("DESCRIPTION.md", encoding="utf-8") as fh:
+            long_description = fh.read()
+        return long_description
+    except FileNotFoundError:
+        return "" 
 
 
 setup(
         name="shopkeepr",
-        version="1.1.4",
+        version=get_version('VERSION.txt'),
         description="A command line tool for project management. Made for Developers",
-        long_description=long_description,
+        long_description=get_long_description(),
         url="https://github.com/ayushpriya10/ShopKeepr",
         author="Sameeran Bandishti, Ayush Priya",
         author_email="shopkeepr3.6@gmail.com",
         packages=find_packages(include=[
-            "keepr"
+            "keepr", "keepr.utils", "keepr.utils.scripts"
         ]),
         include_package_data=True,
         entry_points={
             "console_scripts": [
-                'keepr = keepr.main:run_application'
+                'keepr = keepr.__main__:run_application'
             ]
         },
         classifiers=[

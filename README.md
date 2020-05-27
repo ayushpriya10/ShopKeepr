@@ -1,4 +1,7 @@
 # ShopKeepr
+
+[![Actions Status](https://github.com/Geek-ubaid/ShopKeepr/workflows/Shopkeepr/badge.svg)](https://github.com/Geek-ubaid/ShopKeepr/actions)
+
 An automated requirements manager for python projects.
 
 Ever felt that updating the requirements.txt file is a bit too tedious? or too bloated with a lot of dependencies? Same. A lot of times it happens that after uninstalling a package from your project, there are dangling dependencies still left.

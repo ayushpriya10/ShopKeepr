@@ -4,9 +4,10 @@ from sqlalchemy import MetaData
 from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy import create_engine
 
+
 class Database():
-    
-    engine = create_engine('sqlite:///{}'.format('packages.db'), echo=True)
+
+    engine = create_engine('sqlite:///{}'.format('packages.db'), echo=False)
     meta = MetaData()
     packages = Table(
         'packages', meta,
@@ -19,6 +20,7 @@ class Database():
     def initiate_engine(self):
         self.meta.create_all(self.engine)
         return self.packages, self.engine
+
 
 if __name__ == '__main__':
     Database().initiate_engine()
