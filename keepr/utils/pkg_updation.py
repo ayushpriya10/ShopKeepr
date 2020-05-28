@@ -1,4 +1,4 @@
-from pkg_scripts.misc_functions import check_if_exists, install, get_version, update_requirements_file
+from .misc_functions import check_if_exists, install, get_version, update_requirements_file
 
 
 def update_packages(packages_to_update, db, conn):
@@ -13,13 +13,14 @@ def update_packages(packages_to_update, db, conn):
         print(pid)
         if pid is not None:
             install(package)
-            update_package_query = db.update().values(version=get_version(package_name)).where(db.c.name == package_name)
+            update_package_query = db.update().values(
+                version=get_version(package_name)).where(
+                db.c.name == package_name)
             conn.execute(update_package_query)
-        
+
             return True
-        
+
         else:
             return False
-    
-    update_requirements_file(conn, db)
 
+    update_requirements_file(conn, db)

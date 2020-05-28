@@ -1,0 +1,3 @@
+## for excluding any package data you dont want in the package source code after installation
+include keepr/utils/scripts/activate_env.bat
+include keepr/utils/scripts/activate_env.sh

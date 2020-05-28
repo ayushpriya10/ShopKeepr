@@ -1,4 +1,7 @@
 # ShopKeepr
+
+[![Actions Status](https://github.com/Geek-ubaid/ShopKeepr/workflows/Shopkeepr/badge.svg)](https://github.com/Geek-ubaid/ShopKeepr/actions)
+
 An automated requirements manager for python projects.
 
 Ever felt that updating the requirements.txt file is a bit too tedious? or too bloated with a lot of dependencies? Same. A lot of times it happens that after uninstalling a package from your project, there are dangling dependencies still left.
@@ -18,11 +21,12 @@ keepr <command> <package list>
 
 Commands:
 
+* activate - Activate virtualenv
 * install - Install Packages
 * uninstall - Uninstall Packages and dependencies
 * update - Update an existing package
 * help - Display Help information
-* credits - List author credits
+
 
 Example:
 ```bash
@@ -35,7 +39,7 @@ keepr install django==2.2 pymongo==1.2
 
 
 To-Do:
-* Feature to manage different requirements and installed packages across git branches.
-* Feature to ask user to take action about installed but unused packages.
-* Feature to whitelist packages such that they don't show up as unused even if they arent imported.
-* Solution for modules with different package names and aliases.
+* [ ] Feature to manage different requirements and installed packages across git branches.
+* [ ] Feature to ask user to take action about installed but unused packages.
+* [ ] Feature to whitelist packages such that they don't show up as unused even if they arent imported.
+* [ ] Solution for modules with different package names and aliases.
